@@ -70,7 +70,7 @@
             else
             {
                 p = new Point(center.X, center.Y);
-                saveData.PointList.Add(new GeoPoint(p));
+                saveData.PointList.Add(GeoHelper.CreateGeoPoint(p));
 
                 if (this.SelectedPoint != Point.Empty)
                 {
@@ -107,7 +107,7 @@
                 if (mouse.X - 2 < p.X && p.X < mouse.X + 2 &&
                           mouse.Y - 2 < p.Y && p.Y < mouse.Y + 2)
                 {
-                    return p.ToPoint();
+                    return GeoHelper.ToPoint(p);
                 }
             }
 
@@ -254,13 +254,13 @@
             // 関節点の描画。
             foreach (var point in saveData.PointList)
             {
-                this.DrawJointPoint(point.ToPoint());
+                this.DrawJointPoint(GeoHelper.ToPoint(point));
             }
 
             // 関節点をつなぐ線の描画。
             foreach (var line in saveData.LineList)
             {
-                this.DrawLine(line.PointA.ToPoint(), line.PointB.ToPoint());
+                this.DrawLine(GeoHelper.ToPoint(line.PointA), GeoHelper.ToPoint(line.PointB));
             }
         }
     }

@@ -1,10 +1,12 @@
 ﻿namespace Grayscale.GeoDot
 {
+    using System;
     using System.Drawing;
 
     /// <summary>
     /// セーブデータ用の点。
     /// </summary>
+    [Serializable]
     public class GeoPoint
     {
         /// <summary>
@@ -26,16 +28,6 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GeoPoint"/> class.
-        /// </summary>
-        /// <param name="p">点。</param>
-        public GeoPoint(Point p)
-        {
-            this.X = p.X;
-            this.Y = p.Y;
-        }
-
-        /// <summary>
         /// Gets or sets 横位置。
         /// </summary>
         public int X { get; set; }
@@ -44,14 +36,5 @@
         /// Gets or sets 縦位置。
         /// </summary>
         public int Y { get; set; }
-
-        /// <summary>
-        /// 描画オブジェクト作成。
-        /// </summary>
-        /// <returns>点。</returns>
-        public Point ToPoint()
-        {
-            return new Point(this.X, this.Y);
-        }
     }
 }

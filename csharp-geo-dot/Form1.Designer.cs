@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            Grayscale.GeoDot.SaveData saveData2 = new Grayscale.GeoDot.SaveData();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ファイルToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mainUserControl1 = new Grayscale.GeoDot.MainUserControl();
             this.読込ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainUserControl1 = new Grayscale.GeoDot.MainUserControl();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,24 +62,25 @@
             // 保存ToolStripMenuItem
             // 
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(132, 30);
             this.保存ToolStripMenuItem.Text = "保存";
             this.保存ToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
+            // 
+            // 読込ToolStripMenuItem
+            // 
+            this.読込ToolStripMenuItem.Name = "読込ToolStripMenuItem";
+            this.読込ToolStripMenuItem.Size = new System.Drawing.Size(132, 30);
+            this.読込ToolStripMenuItem.Text = "読込";
+            this.読込ToolStripMenuItem.Click += new System.EventHandler(this.LoadToolStripMenuItem_Click);
             // 
             // mainUserControl1
             // 
             this.mainUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainUserControl1.Location = new System.Drawing.Point(0, 33);
             this.mainUserControl1.Name = "mainUserControl1";
+            this.mainUserControl1.SaveData = saveData2;
             this.mainUserControl1.Size = new System.Drawing.Size(800, 417);
             this.mainUserControl1.TabIndex = 1;
-            // 
-            // 読込ToolStripMenuItem
-            // 
-            this.読込ToolStripMenuItem.Name = "読込ToolStripMenuItem";
-            this.読込ToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
-            this.読込ToolStripMenuItem.Text = "読込";
-            this.読込ToolStripMenuItem.Click += new System.EventHandler(this.LoadToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -103,6 +107,7 @@
         private System.Windows.Forms.ToolStripMenuItem 保存ToolStripMenuItem;
         private MainUserControl mainUserControl1;
         private System.Windows.Forms.ToolStripMenuItem 読込ToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

@@ -25,9 +25,19 @@
         /// <param name="e">イベント。</param>
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var s = Toml.WriteString(this.mainUserControl1.SaveData);
-            Console.WriteLine("Toml = " + s);
-            File.WriteAllText("geo-dot-save.toml", s);
+            switch (this.saveFileDialog1.ShowDialog(this))
+            {
+                case DialogResult.OK:
+                    {
+                        var s = Toml.WriteString(this.mainUserControl1.SaveData);
+                        Console.WriteLine("Toml = " + s);
+
+                        // "geo-dot-save.toml"
+                        File.WriteAllText(this.saveFileDialog1.FileName, s);
+                    }
+
+                    break;
+            }
         }
 
         private void LoadToolStripMenuItem_Click(object sender, EventArgs e)

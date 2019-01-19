@@ -60,6 +60,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GeoHelper.cs" />
     <Compile Include="GeoPoint.cs" />
     <Compile Include="GeoLine.cs" />
     <Compile Include="MainUserControl.cs">

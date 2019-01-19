@@ -1,10 +1,12 @@
 ﻿namespace Grayscale.GeoDot
 {
+    using System;
     using System.Drawing;
 
     /// <summary>
     /// 線が引かれている２点間。
     /// </summary>
+    [Serializable]
     public class GeoLine
     {
         /// <summary>
@@ -32,8 +34,8 @@
         /// <param name="b">終点。</param>
         public GeoLine(Point a, Point b)
         {
-            this.PointA = new GeoPoint(a);
-            this.PointB = new GeoPoint(b);
+            this.PointA = GeoHelper.CreateGeoPoint(a);
+            this.PointB = GeoHelper.CreateGeoPoint(b);
         }
 
         /// <summary>
