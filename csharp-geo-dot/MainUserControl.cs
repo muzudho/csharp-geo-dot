@@ -14,8 +14,15 @@
         public MainUserControl()
         {
             this.InitializeComponent();
+            this.SaveData = new SaveData();
             this.PixelBoard = new PixelBoard();
+            this.PixelBoard.RefreshImage(this.SaveData);
         }
+
+        /// <summary>
+        /// Gets セーブデータ。
+        /// </summary>
+        public SaveData SaveData { get; private set; }
 
         /// <summary>
         /// Gets ピクセルの２次元配列。
@@ -40,13 +47,13 @@
 
         private void MainUserControl_MouseDown(object sender, MouseEventArgs e)
         {
-            this.PixelBoard.TouchPoint(new Point(e.X, e.Y));
+            this.PixelBoard.TouchPoint(new Point(e.X, e.Y), this.SaveData);
             this.Refresh();
         }
 
         private void MainUserControl_MouseMove(object sender, MouseEventArgs e)
         {
-            this.PixelBoard.SetHoverPoint(new Point(e.X, e.Y));
+            this.PixelBoard.SetHoverPoint(new Point(e.X, e.Y), this.SaveData);
             this.Refresh();
         }
     }

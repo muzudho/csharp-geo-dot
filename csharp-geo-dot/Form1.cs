@@ -1,7 +1,9 @@
 ﻿namespace Grayscale.GeoDot
 {
     using System;
+    using System.IO;
     using System.Windows.Forms;
+    using Nett;
 
     /// <summary>
     /// フォーム。
@@ -23,6 +25,15 @@
         /// <param name="e">イベント。</param>
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var config = TomlSettings.Create(cfg => cfg
+                .ConfigureType<decimal>(type => type
+                    .WithConversionFor<TomlFloat>(convert => convert
+                        .ToToml(dec => (double)dec)
+                        .FromToml(tf => (decimal)tf.Value))));
+
+            var s = Toml.WriteString(this.mainUserControl1.SaveData);
+            Console.WriteLine("Toml = " + s);
+            File.WriteAllText("geo-dot-save.toml", s);
         }
     }
 }

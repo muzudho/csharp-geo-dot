@@ -20,9 +20,6 @@
             this.Bitmap = new Bitmap(this.Width, this.Height);
             this.HoverPoint = Point.Empty;
             this.SelectedPoint = Point.Empty;
-            this.PointList = new List<Point>();
-            this.LineList = new List<Line>();
-            this.RefreshImage();
         }
 
         /// <summary>
@@ -34,16 +31,6 @@
         /// Gets 選択しているポイント。
         /// </summary>
         public Point SelectedPoint { get; private set; }
-
-        /// <summary>
-        /// Gets マウスでクリックしたポイント。
-        /// </summary>
-        public List<Point> PointList { get; private set; }
-
-        /// <summary>
-        /// Gets 線が引かれている２点間のリスト。
-        /// </summary>
-        public List<Line> LineList { get; private set; }
 
         /// <summary>
         /// Gets or sets 横幅。
@@ -64,9 +51,10 @@
         /// 点を追加する、または　選択する。
         /// </summary>
         /// <param name="center">中央位置。</param>
-        public void TouchPoint(Point center)
+        /// <param name="saveData">セーブデータ。</param>
+        public void TouchPoint(Point center, SaveData saveData)
         {
-            var p = this.ContainsPoint(center);
+            var p = this.ContainsPoint(center, saveData);
             if (p != Point.Empty)
             {
                 this.SelectedPoint = p;
@@ -74,16 +62,16 @@
             else
             {
                 p = new Point(center.X, center.Y);
-                this.PointList.Add(p);
+                saveData.PointList.Add(p);
 
                 if (this.SelectedPoint != Point.Empty)
                 {
                     // 2点間をつなぐ。
-                    this.LineList.Add(new Line(this.SelectedPoint, p));
+                    saveData.LineList.Add(new Line(this.SelectedPoint, p));
                 }
 
                 this.SelectedPoint = p;
-                this.RefreshImage();
+                this.RefreshImage(saveData);
             }
         }
 
@@ -91,20 +79,22 @@
         /// マウスカーソルがある位置。
         /// </summary>
         /// <param name="center">中央位置。</param>
-        public void SetHoverPoint(Point center)
+        /// <param name="saveData">セーブデータ。</param>
+        public void SetHoverPoint(Point center, SaveData saveData)
         {
             this.HoverPoint = center;
-            this.RefreshImage();
+            this.RefreshImage(saveData);
         }
 
         /// <summary>
         /// マウスカーソルと重なっていると判定する関節点。
         /// </summary>
         /// <param name="mouse">マウスカーソルの位置。</param>
+        /// <param name="saveData">セーブデータ。</param>
         /// <returns>マウスカーソルと重なっている関節点。</returns>
-        public Point ContainsPoint(Point mouse)
+        public Point ContainsPoint(Point mouse, SaveData saveData)
         {
-            foreach (var p in this.PointList)
+            foreach (var p in saveData.PointList)
             {
                 if (mouse.X - 2 < p.X && p.X < mouse.X + 2 &&
                           mouse.Y - 2 < p.Y && p.Y < mouse.Y + 2)
@@ -241,7 +231,8 @@
         /// <summary>
         /// 画像の再描画。
         /// </summary>
-        public void RefreshImage()
+        /// <param name="saveData">セーブデータ。</param>
+        public void RefreshImage(SaveData saveData)
         {
             // 白で塗りつぶす。
             for (int y = 0; y < this.Height; y++)
@@ -253,29 +244,16 @@
             }
 
             // 関節点の描画。
-            foreach (var point in this.PointList)
+            foreach (var point in saveData.PointList)
             {
                 this.DrawJointPoint(point);
             }
 
             // 関節点をつなぐ線の描画。
-            foreach (var line in this.LineList)
+            foreach (var line in saveData.LineList)
             {
                 this.DrawLine(line.PointA, line.PointB);
             }
-
-            /*
-            Point prePoint = Point.Empty;
-            foreach (var point in this.PointList)
-            {
-                if (prePoint != Point.Empty)
-                {
-                    this.DrawLine(prePoint, point);
-                }
-
-                prePoint = point;
-            }
-            */
         }
     }
 }
