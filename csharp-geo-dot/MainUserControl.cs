@@ -40,7 +40,7 @@
 
         private void MainUserControl_MouseDown(object sender, MouseEventArgs e)
         {
-            this.PixelBoard.AddPoint(e.X, e.Y);
+            this.PixelBoard.TouchPoint(new Point(e.X, e.Y));
             this.Refresh();
         }
 

@@ -18,7 +18,8 @@
             this.Height = 128;
 
             this.Bitmap = new Bitmap(this.Width, this.Height);
-            this.HoverPoint = default(Point);
+            this.HoverPoint = Point.Empty;
+            this.SelectedPoint = Point.Empty;
             this.PointList = new List<Point>();
             this.RefreshImage();
         }
@@ -27,6 +28,11 @@
         /// Gets マウスカーソルがあるポイント。
         /// </summary>
         public Point HoverPoint { get; private set; }
+
+        /// <summary>
+        /// Gets 選択しているポイント。
+        /// </summary>
+        public Point SelectedPoint { get; private set; }
 
         /// <summary>
         /// Gets or sets マウスでクリックしたポイント。
@@ -49,14 +55,21 @@
         public Bitmap Bitmap { get; private set; }
 
         /// <summary>
-        /// 点を追加する。
+        /// 点を追加する、または　選択する。
         /// </summary>
-        /// <param name="centerX">横位置。</param>
-        /// <param name="centerY">縦位置。</param>
-        public void AddPoint(int centerX, int centerY)
+        /// <param name="center">中央位置。</param>
+        public void TouchPoint(Point center)
         {
-            this.PointList.Add(new Point(centerX, centerY));
-            this.RefreshImage();
+            var p = this.ContainsPoint(center);
+            if (p != Point.Empty)
+            {
+                this.SelectedPoint = p;
+            }
+            else
+            {
+                this.PointList.Add(new Point(center.X, center.Y));
+                this.RefreshImage();
+            }
         }
 
         /// <summary>
@@ -70,12 +83,36 @@
         }
 
         /// <summary>
+        /// マウスカーソルと重なっていると判定する関節点。
+        /// </summary>
+        /// <param name="mouse">マウスカーソルの位置。</param>
+        /// <returns>マウスカーソルと重なっている関節点。</returns>
+        public Point ContainsPoint(Point mouse)
+        {
+            foreach (var p in this.PointList)
+            {
+                if (mouse.X - 2 < p.X && p.X < mouse.X + 2 &&
+                          mouse.Y - 2 < p.Y && p.Y < mouse.Y + 2)
+                {
+                    return p;
+                }
+            }
+
+            return Point.Empty;
+        }
+
+        /// <summary>
         /// マウスカーソルが重なっていると判定するかどうか。
         /// </summary>
         /// <param name="p">関節点。</param>
         /// <returns>マウスカーソルと重なっている。</returns>
         public bool IsHoverPoint(Point p)
         {
+            if (this.HoverPoint.IsEmpty)
+            {
+                return false;
+            }
+
             if (this.HoverPoint.X - 2 < p.X && p.X < this.HoverPoint.X + 2 &&
                       this.HoverPoint.Y - 2 < p.Y && p.Y < this.HoverPoint.Y + 2)
             {
@@ -92,7 +129,11 @@
         public void DrawJointPoint(Point center)
         {
             Color color = Color.Gray;
-            if (this.IsHoverPoint(center))
+            if (this.SelectedPoint == center)
+            {
+                color = Color.Red;
+            }
+            else if (this.IsHoverPoint(center))
             {
                 color = Color.Green;
             }
