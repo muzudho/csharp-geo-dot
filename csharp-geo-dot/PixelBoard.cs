@@ -21,6 +21,7 @@
             this.HoverPoint = Point.Empty;
             this.SelectedPoint = Point.Empty;
             this.PointList = new List<Point>();
+            this.LineList = new List<Line>();
             this.RefreshImage();
         }
 
@@ -35,9 +36,14 @@
         public Point SelectedPoint { get; private set; }
 
         /// <summary>
-        /// Gets or sets マウスでクリックしたポイント。
+        /// Gets マウスでクリックしたポイント。
         /// </summary>
-        public List<Point> PointList { get; set; }
+        public List<Point> PointList { get; private set; }
+
+        /// <summary>
+        /// Gets 線が引かれている２点間のリスト。
+        /// </summary>
+        public List<Line> LineList { get; private set; }
 
         /// <summary>
         /// Gets or sets 横幅。
@@ -67,7 +73,16 @@
             }
             else
             {
-                this.PointList.Add(new Point(center.X, center.Y));
+                p = new Point(center.X, center.Y);
+                this.PointList.Add(p);
+
+                if (this.SelectedPoint != Point.Empty)
+                {
+                    // 2点間をつなぐ。
+                    this.LineList.Add(new Line(this.SelectedPoint, p));
+                }
+
+                this.SelectedPoint = p;
                 this.RefreshImage();
             }
         }
@@ -244,6 +259,12 @@
             }
 
             // 関節点をつなぐ線の描画。
+            foreach (var line in this.LineList)
+            {
+                this.DrawLine(line.PointA, line.PointB);
+            }
+
+            /*
             Point prePoint = Point.Empty;
             foreach (var point in this.PointList)
             {
@@ -254,6 +275,7 @@
 
                 prePoint = point;
             }
+            */
         }
     }
 }

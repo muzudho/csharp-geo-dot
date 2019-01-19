@@ -57,6 +57,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Line.cs" />
     <Compile Include="MainUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
