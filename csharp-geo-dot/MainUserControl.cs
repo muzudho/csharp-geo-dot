@@ -20,9 +20,9 @@
         }
 
         /// <summary>
-        /// Gets セーブデータ。
+        /// Gets or sets セーブデータ。
         /// </summary>
-        public SaveData SaveData { get; private set; }
+        public SaveData SaveData { get; set; }
 
         /// <summary>
         /// Gets ピクセルの２次元配列。

@@ -14,12 +14,7 @@
         /// </summary>
         public PixelBoard()
         {
-            this.Width = 128;
-            this.Height = 128;
-
-            this.Bitmap = new Bitmap(this.Width, this.Height);
-            this.HoverPoint = Point.Empty;
-            this.SelectedPoint = Point.Empty;
+            this.Clear();
         }
 
         /// <summary>
@@ -48,6 +43,19 @@
         public Bitmap Bitmap { get; private set; }
 
         /// <summary>
+        /// 初期化。
+        /// </summary>
+        public void Clear()
+        {
+            this.Width = 128;
+            this.Height = 128;
+
+            this.Bitmap = new Bitmap(this.Width, this.Height);
+            this.HoverPoint = Point.Empty;
+            this.SelectedPoint = Point.Empty;
+        }
+
+        /// <summary>
         /// 点を追加する、または　選択する。
         /// </summary>
         /// <param name="center">中央位置。</param>
@@ -62,12 +70,12 @@
             else
             {
                 p = new Point(center.X, center.Y);
-                saveData.PointList.Add(p);
+                saveData.PointList.Add(new GeoPoint(p));
 
                 if (this.SelectedPoint != Point.Empty)
                 {
                     // 2点間をつなぐ。
-                    saveData.LineList.Add(new Line(this.SelectedPoint, p));
+                    saveData.LineList.Add(new GeoLine(this.SelectedPoint, p));
                 }
 
                 this.SelectedPoint = p;
@@ -99,7 +107,7 @@
                 if (mouse.X - 2 < p.X && p.X < mouse.X + 2 &&
                           mouse.Y - 2 < p.Y && p.Y < mouse.Y + 2)
                 {
-                    return p;
+                    return p.ToPoint();
                 }
             }
 
@@ -246,13 +254,13 @@
             // 関節点の描画。
             foreach (var point in saveData.PointList)
             {
-                this.DrawJointPoint(point);
+                this.DrawJointPoint(point.ToPoint());
             }
 
             // 関節点をつなぐ線の描画。
             foreach (var line in saveData.LineList)
             {
-                this.DrawLine(line.PointA, line.PointB);
+                this.DrawLine(line.PointA.ToPoint(), line.PointB.ToPoint());
             }
         }
     }

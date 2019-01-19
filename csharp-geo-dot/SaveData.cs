@@ -13,18 +13,18 @@
         /// </summary>
         public SaveData()
         {
-            this.PointList = new List<Point>();
-            this.LineList = new List<Line>();
+            this.PointList = new List<GeoPoint>();
+            this.LineList = new List<GeoLine>();
         }
 
         /// <summary>
-        /// Gets マウスでクリックしたポイント。
+        /// Gets or sets マウスでクリックしたポイント。
         /// </summary>
-        public List<Point> PointList { get; private set; }
+        public List<GeoPoint> PointList { get; set; }
 
         /// <summary>
-        /// Gets 線が引かれている２点間のリスト。
+        /// Gets or sets 線が引かれている２点間のリスト。
         /// </summary>
-        public List<Line> LineList { get; private set; }
+        public List<GeoLine> LineList { get; set; }
     }
 }
