@@ -1,11 +1,12 @@
 ﻿namespace Grayscale.GeoDot
 {
+    using System;
     using System.Collections.Generic;
-    using System.Drawing;
 
     /// <summary>
     /// Toml形式に入出力することを想定。
     /// </summary>
+    [Serializable]
     public class SaveData
     {
         /// <summary>

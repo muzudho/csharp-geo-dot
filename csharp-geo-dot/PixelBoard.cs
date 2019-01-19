@@ -75,7 +75,7 @@
                 if (this.SelectedPoint != Point.Empty)
                 {
                     // 2点間をつなぐ。
-                    saveData.LineList.Add(new GeoLine(this.SelectedPoint, p));
+                    saveData.LineList.Add(GeoHelper.CreateGeoLine(this.SelectedPoint, p));
                 }
 
                 this.SelectedPoint = p;

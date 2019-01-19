@@ -37,6 +37,12 @@
     <CodeAnalysisRuleSet>csharp-geo-dot.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>..\bin\Release\Grayscale.GeoDot.xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>geo-dot.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Nett, Version=0.10.0.0, Culture=neutral, PublicKeyToken=605dcfe7a1d3365b, processorArchitecture=MSIL">
       <HintPath>..\packages\Nett.0.10.1\lib\Net40\Nett.dll</HintPath>
@@ -75,6 +81,7 @@
     <Compile Include="SaveData.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainUserControl.resx">
       <DependentUpon>MainUserControl.cs</DependentUpon>
@@ -90,6 +97,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="csharp-geo-dot.ruleset" />
+    <None Include="geo-dot.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

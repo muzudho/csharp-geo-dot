@@ -13,9 +13,9 @@
         /// </summary>
         public MainUserControl()
         {
-            this.InitializeComponent();
             this.SaveData = new SaveData();
             this.PixelBoard = new PixelBoard();
+            this.InitializeComponent();
             this.PixelBoard.RefreshImage(this.SaveData);
         }
 

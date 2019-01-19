@@ -40,12 +40,27 @@
             }
         }
 
+        /// <summary>
+        /// 読取。
+        /// </summary>
+        /// <param name="sender">送信元。</param>
+        /// <param name="e">イベント。</param>
         private void LoadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.mainUserControl1.PixelBoard.Clear();
-            this.mainUserControl1.SaveData = Toml.ReadFile<SaveData>("geo-dot-save.toml");
-            this.mainUserControl1.PixelBoard.RefreshImage(this.mainUserControl1.SaveData);
-            this.mainUserControl1.Refresh();
+            switch (this.openFileDialog1.ShowDialog(this))
+            {
+                case DialogResult.OK:
+                    {
+                        this.mainUserControl1.PixelBoard.Clear();
+
+                        // "geo-dot-save.toml"
+                        this.mainUserControl1.SaveData = Toml.ReadFile<SaveData>(this.openFileDialog1.FileName);
+                        this.mainUserControl1.PixelBoard.RefreshImage(this.mainUserControl1.SaveData);
+                        this.mainUserControl1.Refresh();
+                    }
+
+                    break;
+            }
         }
     }
 }

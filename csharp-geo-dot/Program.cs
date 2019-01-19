@@ -1,6 +1,7 @@
-﻿namespace Grayscale.GeoDot
+﻿using System;
+[assembly: CLSCompliant(true)]
+namespace Grayscale.GeoDot
 {
-    using System;
     using System.Windows.Forms;
 
     /// <summary>

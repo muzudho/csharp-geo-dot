@@ -1,7 +1,6 @@
 ﻿namespace Grayscale.GeoDot
 {
     using System;
-    using System.Drawing;
 
     /// <summary>
     /// 線が引かれている２点間。
@@ -25,17 +24,6 @@
         {
             this.PointA = a;
             this.PointB = b;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GeoLine"/> class.
-        /// </summary>
-        /// <param name="a">始点。</param>
-        /// <param name="b">終点。</param>
-        public GeoLine(Point a, Point b)
-        {
-            this.PointA = GeoHelper.CreateGeoPoint(a);
-            this.PointB = GeoHelper.CreateGeoPoint(b);
         }
 
         /// <summary>
