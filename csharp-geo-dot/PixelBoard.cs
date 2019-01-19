@@ -18,9 +18,15 @@
             this.Height = 128;
 
             this.Bitmap = new Bitmap(this.Width, this.Height);
+            this.HoverPoint = default(Point);
             this.PointList = new List<Point>();
             this.RefreshImage();
         }
+
+        /// <summary>
+        /// Gets マウスカーソルがあるポイント。
+        /// </summary>
+        public Point HoverPoint { get; private set; }
 
         /// <summary>
         /// Gets or sets マウスでクリックしたポイント。
@@ -54,36 +60,65 @@
         }
 
         /// <summary>
+        /// マウスカーソルがある位置。
+        /// </summary>
+        /// <param name="center">中央位置。</param>
+        public void SetHoverPoint(Point center)
+        {
+            this.HoverPoint = center;
+            this.RefreshImage();
+        }
+
+        /// <summary>
+        /// マウスカーソルが重なっていると判定するかどうか。
+        /// </summary>
+        /// <param name="p">関節点。</param>
+        /// <returns>マウスカーソルと重なっている。</returns>
+        public bool IsHoverPoint(Point p)
+        {
+            if (this.HoverPoint.X - 2 < p.X && p.X < this.HoverPoint.X + 2 &&
+                      this.HoverPoint.Y - 2 < p.Y && p.Y < this.HoverPoint.Y + 2)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// 関節点を描画します。
         /// </summary>
-        /// <param name="centerX">横位置。</param>
-        /// <param name="centerY">縦位置。</param>
-        public void DrawJointPoint(int centerX, int centerY)
+        /// <param name="center">中央位置。</param>
+        public void DrawJointPoint(Point center)
         {
             Color color = Color.Gray;
+            if (this.IsHoverPoint(center))
+            {
+                color = Color.Green;
+            }
 
             // 上辺
-            for (int x = centerX - 2; x < centerX + 3; x++)
+            for (int x = center.X - 2; x < center.X + 3; x++)
             {
-                this.Bitmap.SetPixel(x, centerY - 2, color);
+                this.Bitmap.SetPixel(x, center.Y - 2, color);
             }
 
             // 右辺
-            for (int y = centerY - 2; y < centerY + 3; y++)
+            for (int y = center.Y - 2; y < center.Y + 3; y++)
             {
-                this.Bitmap.SetPixel(centerX + 2, y, color);
+                this.Bitmap.SetPixel(center.X + 2, y, color);
             }
 
             // 下辺
-            for (int x = centerX - 2; x < centerX + 3; x++)
+            for (int x = center.X - 2; x < center.X + 3; x++)
             {
-                this.Bitmap.SetPixel(x, centerY + 2, color);
+                this.Bitmap.SetPixel(x, center.Y + 2, color);
             }
 
             // 左辺
-            for (int y = centerY - 2; y < centerY + 3; y++)
+            for (int y = center.Y - 2; y < center.Y + 3; y++)
             {
-                this.Bitmap.SetPixel(centerX - 2, y, color);
+                this.Bitmap.SetPixel(center.X - 2, y, color);
             }
         }
 
@@ -135,14 +170,14 @@
                 // ヨコの方が短い場合、タテが抜けないようにする。
                 for (int len = 0; len < height; len++)
                 {
-                    this.Bitmap.SetPixel((int)(a.X + (xStep * len * ((float)width/height))), a.Y + (yStep * len), color);
+                    this.Bitmap.SetPixel((int)(a.X + (xStep * len * ((float)width / height))), a.Y + (yStep * len), color);
                 }
             }
             else
             {
                 for (int len = 0; len < width; len++)
                 {
-                    this.Bitmap.SetPixel(a.X + (xStep * len), (int)(a.Y + (yStep * len * ((float)height/width))), color);
+                    this.Bitmap.SetPixel(a.X + (xStep * len), (int)(a.Y + (yStep * len * ((float)height / width))), color);
                 }
             }
         }
@@ -164,7 +199,7 @@
             // 関節点の描画。
             foreach (var point in this.PointList)
             {
-                this.DrawJointPoint(point.X, point.Y);
+                this.DrawJointPoint(point);
             }
 
             // 関節点をつなぐ線の描画。

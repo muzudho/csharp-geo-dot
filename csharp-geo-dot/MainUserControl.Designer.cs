@@ -37,10 +37,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.DoubleBuffered = true;
             this.Name = "MainUserControl";
             this.Size = new System.Drawing.Size(354, 346);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainUserControl_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainUserControl_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainUserControl_MouseMove);
             this.ResumeLayout(false);
 
         }

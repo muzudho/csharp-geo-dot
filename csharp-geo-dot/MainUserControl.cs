@@ -43,5 +43,11 @@
             this.PixelBoard.AddPoint(e.X, e.Y);
             this.Refresh();
         }
+
+        private void MainUserControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            this.PixelBoard.SetHoverPoint(new Point(e.X, e.Y));
+            this.Refresh();
+        }
     }
 }
