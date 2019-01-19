@@ -14,14 +14,15 @@
         {
             this.Width = 128;
             this.Height = 128;
-            this.Board = new Color[this.Height][];
+
+            this.Bitmap = new Bitmap(this.Width, this.Height);
+
+            // 白で塗りつぶす。
             for (int y = 0; y < this.Height; y++)
             {
-                this.Board[y] = new Color[this.Width];
-
                 for (int x = 0; x < this.Width; x++)
                 {
-                    this.Board[y][x] = Color.White;
+                    this.Bitmap.SetPixel(x, y, Color.White);
                 }
             }
         }
@@ -37,9 +38,9 @@
         public int Height { get; set; }
 
         /// <summary>
-        /// Gets ピクセルの２次元配列。
+        /// Gets 画像データ。
         /// </summary>
-        public Color[][] Board { get; private set; }
+        public Bitmap Bitmap { get; private set; }
 
         /// <summary>
         /// 箱を作成する。
@@ -51,7 +52,25 @@
             // 上辺
             for (int x = centerX - 2; x < centerX + 2; x++)
             {
-                this.Board[centerY - 2][x] = Color.Black;
+                this.Bitmap.SetPixel(x, centerY - 2, Color.Black);
+            }
+
+            // 右辺
+            for (int y = centerY - 2; y < centerY + 2; y++)
+            {
+                this.Bitmap.SetPixel(centerX+2, y, Color.Black);
+            }
+
+            // 下辺
+            for (int x = centerX - 2; x < centerX + 2; x++)
+            {
+                this.Bitmap.SetPixel(x, centerY + 2, Color.Black);
+            }
+
+            // 左辺
+            for (int y = centerY - 2; y < centerY + 2; y++)
+            {
+                this.Bitmap.SetPixel(centerX - 2, y, Color.Black);
             }
         }
     }
