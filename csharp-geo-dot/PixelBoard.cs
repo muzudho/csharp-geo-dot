@@ -1,5 +1,6 @@
 ﻿namespace Grayscale.GeoDot
 {
+    using System.Collections.Generic;
     using System.Drawing;
 
     /// <summary>
@@ -16,16 +17,14 @@
             this.Height = 128;
 
             this.Bitmap = new Bitmap(this.Width, this.Height);
-
-            // 白で塗りつぶす。
-            for (int y = 0; y < this.Height; y++)
-            {
-                for (int x = 0; x < this.Width; x++)
-                {
-                    this.Bitmap.SetPixel(x, y, Color.White);
-                }
-            }
+            this.PointList = new List<Point>();
+            this.RefreshImage();
         }
+
+        /// <summary>
+        /// Gets or sets マウスでクリックしたポイント。
+        /// </summary>
+        public List<Point> PointList { get; set; }
 
         /// <summary>
         /// Gets or sets 横幅。
@@ -43,34 +42,67 @@
         public Bitmap Bitmap { get; private set; }
 
         /// <summary>
-        /// 箱を作成する。
+        /// 点を追加する。
         /// </summary>
         /// <param name="centerX">横位置。</param>
         /// <param name="centerY">縦位置。</param>
-        public void CreateBox(int centerX, int centerY)
+        public void AddPoint(int centerX, int centerY)
         {
+            this.PointList.Add(new Point(centerX, centerY));
+            this.RefreshImage();
+        }
+
+        /// <summary>
+        /// 関節点を描画します。
+        /// </summary>
+        /// <param name="centerX">横位置。</param>
+        /// <param name="centerY">縦位置。</param>
+        public void DrawJointPoint(int centerX, int centerY)
+        {
+            Color color = Color.Gray;
+
             // 上辺
-            for (int x = centerX - 2; x < centerX + 2; x++)
+            for (int x = centerX - 2; x < centerX + 3; x++)
             {
-                this.Bitmap.SetPixel(x, centerY - 2, Color.Black);
+                this.Bitmap.SetPixel(x, centerY - 2, color);
             }
 
             // 右辺
-            for (int y = centerY - 2; y < centerY + 2; y++)
+            for (int y = centerY - 2; y < centerY + 3; y++)
             {
-                this.Bitmap.SetPixel(centerX+2, y, Color.Black);
+                this.Bitmap.SetPixel(centerX + 2, y, color);
             }
 
             // 下辺
-            for (int x = centerX - 2; x < centerX + 2; x++)
+            for (int x = centerX - 2; x < centerX + 3; x++)
             {
-                this.Bitmap.SetPixel(x, centerY + 2, Color.Black);
+                this.Bitmap.SetPixel(x, centerY + 2, color);
             }
 
             // 左辺
-            for (int y = centerY - 2; y < centerY + 2; y++)
+            for (int y = centerY - 2; y < centerY + 3; y++)
             {
-                this.Bitmap.SetPixel(centerX - 2, y, Color.Black);
+                this.Bitmap.SetPixel(centerX - 2, y, color);
+            }
+        }
+
+        /// <summary>
+        /// 画像の再描画。
+        /// </summary>
+        public void RefreshImage()
+        {
+            // 白で塗りつぶす。
+            for (int y = 0; y < this.Height; y++)
+            {
+                for (int x = 0; x < this.Width; x++)
+                {
+                    this.Bitmap.SetPixel(x, y, Color.White);
+                }
+            }
+
+            foreach (var point in this.PointList)
+            {
+                this.DrawJointPoint(point.X, point.Y);
             }
         }
     }
